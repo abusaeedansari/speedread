@@ -1,192 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pace Reader - Speed Reading Tool</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pace Reader Pro – Focused‑Skill Speed‑Reading Trainer</title>
   <style>
-    /* --- Configuration & CSS Variables --- */
+    /* -------- CSS VARIABLE THEME -------- */
     :root {
-      /* Base Font & Sizing */
-      --font-family-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-      --base-font-size: 16px;
-      --scale-ratio: 1.25; 
-      --border-radius: 6px;
-      --transition-speed: 0.2s;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+        Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+      --size-base: 16px;
+      --scale: 1.25;
+      --radius: 6px;
+      --fast: 0.2s;
 
-      /* Light Theme Colors */
-      --light-bg: #f7f7f7;
-      --light-surface: #ffffff;
-      --light-text-primary: #2c3e50;
-      --light-text-secondary: #7f8c8d;
-      --light-border: #e0e0e0;
-      --light-accent: #3498db;
-      --light-accent-darker: #2980b9;
-      --light-focus-line: rgba(52, 152, 219, 0.4);
-      --light-button-secondary-bg: #ecf0f1;
-      --light-button-secondary-hover-bg: #e0e5e7;
-      --light-slider-track: #ecf0f1;
-      --light-slider-thumb: var(--light-accent);
-
-      /* Dark Theme Colors */
-      --dark-bg: #121212;
-      --dark-surface: #1e1e1e;
-      --dark-text-primary: #e0e0e0;
-      --dark-text-secondary: #9e9e9e;
-      --dark-border: #424242;
-      --dark-accent: #f0ae67;
-      --dark-accent-darker: #d48f4a;
-      --dark-focus-line: rgba(240, 174, 103, 0.5);
-      --dark-button-secondary-bg: #333333;
-      --dark-button-secondary-hover-bg: #444444;
-      --dark-slider-track: #424242;
-      --dark-slider-thumb: var(--dark-accent);
-
-      /* Assign initial theme (overridden by .dark-mode) */
-      --color-bg: var(--light-bg);
-      --color-surface: var(--light-surface);
-      --color-text-primary: var(--light-text-primary);
-      --color-text-secondary: var(--light-text-secondary);
-      --color-border: var(--light-border);
-      --color-accent: var(--light-accent);
-      --color-accent-darker: var(--light-accent-darker);
-      --color-focus-line: var(--light-focus-line);
-      --color-button-secondary-bg: var(--light-button-secondary-bg);
-      --color-button-secondary-hover-bg: var(--light-button-secondary-hover-bg);
-      --color-slider-track: var(--light-slider-track);
-      --color-slider-thumb: var(--light-slider-thumb);
+      /* LIGHT */
+      --bg: #f7f7f7;
+      --surface: #fff;
+      --txt1: #2c3e50;
+      --txt2: #7f8c8d;
+      --bord: #e0e0e0;
+      --accent: #3498db;
+      --accent-dk: #2980b9;
+      --focus-line: rgba(52, 152, 219, 0.4);
+      --btn-sec: #ecf0f1;
+      --btn-sec-hov: #e0e5e7;
+      --track: #ecf0f1;
+      --thumb: var(--accent);
     }
 
-    /* Apply Dark Mode Variables */
     body.dark-mode {
-      --color-bg: var(--dark-bg);
-      --color-surface: var(--dark-surface);
-      --color-text-primary: var(--dark-text-primary);
-      --color-text-secondary: var(--dark-text-secondary);
-      --color-border: var(--dark-border);
-      --color-accent: var(--dark-accent);
-      --color-accent-darker: var(--dark-accent-darker);
-      --color-focus-line: var(--dark-focus-line);
-      --color-button-secondary-bg: var(--dark-button-secondary-bg);
-      --color-button-secondary-hover-bg: var(--dark-button-secondary-hover-bg);
-      --color-slider-track: var(--dark-slider-track);
-      --color-slider-thumb: var(--dark-slider-thumb);
+      --bg: #121212;
+      --surface: #1e1e1e;
+      --txt1: #e0e0e0;
+      --txt2: #9e9e9e;
+      --bord: #424242;
+      --accent: #f0ae67;
+      --accent-dk: #d48f4a;
+      --focus-line: rgba(240, 174, 103, 0.5);
+      --btn-sec: #333;
+      --btn-sec-hov: #444;
+      --track: #424242;
+      --thumb: var(--accent);
     }
 
-    /* --- Base & Reset --- */
-    *, *::before, *::after {
+    /* ---------- RESET ---------- */
+    *,
+    *::before,
+    *::after {
       box-sizing: border-box;
     }
     html {
-      font-size: var(--base-font-size);
+      font-size: var(--size-base);
     }
     body {
-      font-family: var(--font-family-sans);
-      line-height: 1.6;
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--txt1);
       margin: 0;
-      padding: 0;
-      background-color: var(--color-bg);
-      color: var(--color-text-primary);
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      min-height: 100vh;
-      transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+      justify-content: center;
+      padding: 1.5rem;
+      transition: background var(--fast) ease, color var(--fast) ease;
     }
 
-    /* --- Layout Containers --- */
+    /* ---------- APP CARD ---------- */
     #app {
       width: 100%;
-      max-width: 50rem;
-      padding: 2rem;
-      margin: 2rem 0;
-      background-color: var(--color-surface);
-      border-radius: var(--border-radius);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-      transition: background-color var(--transition-speed) ease;
+      max-width: 52rem;
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
+      padding: 2rem;
+      transition: background var(--fast) ease;
     }
     body.dark-mode #app {
-      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     }
 
-    .app-header { display: flex; flex-direction: column; gap: 1rem; }
-    .app-main   { display: flex; flex-direction: column; gap: 1rem; }
-    .app-footer { display: flex; flex-direction: column; gap: 1rem; }
+    .hide-in-focus {
+      /* used later */
+    }
 
-    /* --- Components Styling --- */
     h1 {
-      font-size: calc(1rem * var(--scale-ratio) * var(--scale-ratio));
+      font-size: calc(1rem * var(--scale) * var(--scale));
       margin: 0;
       text-align: center;
-      color: var(--color-text-primary);
       font-weight: 600;
     }
+
+    /* ---------- TEXT INPUT ---------- */
     #inputText {
       width: 100%;
       min-height: 10rem;
-      padding: 0.75rem 1rem;
-      border: 1px solid var(--color-border);
-      border-radius: var(--border-radius);
-      font-size: 1rem;
-      font-family: inherit;
-      line-height: inherit;
       resize: vertical;
-      background-color: var(--color-bg);
-      color: var(--color-text-primary);
-      transition: border-color var(--transition-speed) ease, background-color var(--transition-speed) ease;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--bord);
+      border-radius: var(--radius);
+      font-family: inherit;
+      background: var(--bg);
+      color: var(--txt1);
+      transition: border var(--fast), background var(--fast);
     }
     #inputText:focus {
       outline: none;
-      border-color: var(--color-accent);
-      box-shadow: 0 0 0 2px var(--color-accent-darker) inset;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px var(--accent-dk) inset;
     }
 
-    /* The core display area */
+    /* ---------- DISPLAY AREA ---------- */
     #displayAreaWrapper {
-      background-color: var(--color-bg);
-      border: 1px solid var(--color-border);
-      border-radius: var(--border-radius);
-      padding: 0 1rem;
+      border: 1px solid var(--bord);
+      border-radius: var(--radius);
+      background: var(--bg);
       min-height: 8rem;
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
-      transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+      padding: 0 1rem;
+      transition: border var(--fast), background var(--fast);
     }
-    #displayArea {
-      width: 100%;
-      /* We'll override font-size/family via JS now. Default fallback: */
-      font-size: 2rem;
-      font-family: var(--font-family-sans);
-      font-weight: 500;
-      color: var(--color-text-primary);
-      text-align: center;
-      /* ALWAYS WRAP on all devices to avoid overflow: */
-      white-space: normal;
-      word-break: break-word;
-      overflow: hidden;
-      text-overflow: clip;
-    }
-    /* Focus line */
     #displayAreaWrapper::before {
-      content: '';
+      content: "";
       position: absolute;
       left: 50%;
       top: 25%;
       bottom: 25%;
       width: 1px;
-      background-color: var(--color-focus-line);
+      background: var(--focus-line);
       transform: translateX(-50%);
       opacity: 0.6;
-      transition: background-color var(--transition-speed) ease;
+      pointer-events: none;
+    }
+    #displayArea {
+      width: 100%;
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 500;
+      line-height: 1.3;
+      word-break: break-word;
+    }
+    .highlight {
+      color: var(--accent);
     }
 
-    /* Controls Section */
+    /* ---------- CONTROLS ---------- */
     #controls {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
@@ -196,149 +158,109 @@
     .control-group {
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 0.35rem;
     }
     label {
       font-size: 0.9rem;
+      color: var(--txt2);
       font-weight: 500;
-      color: var(--color-text-secondary);
       display: flex;
       justify-content: space-between;
-      align-items: center;
     }
     .value-display {
+      color: var(--accent);
       font-weight: 600;
-      color: var(--color-accent);
-      font-size: 0.9rem;
     }
-
-    /* Sliders */
     input[type="range"] {
       width: 100%;
-      height: 0.5rem;
-      cursor: pointer;
       appearance: none;
-      background-color: var(--color-slider-track);
-      border-radius: 99px;
-      transition: background-color var(--transition-speed) ease;
+      height: 0.5rem;
+      border-radius: 999px;
+      background: var(--track);
     }
     input[type="range"]::-webkit-slider-thumb {
       appearance: none;
-      width: 1.2rem;
-      height: 1.2rem;
+      width: 1.1rem;
+      height: 1.1rem;
       border-radius: 50%;
-      background-color: var(--color-slider-thumb);
+      background: var(--thumb);
       cursor: pointer;
-      transition: background-color var(--transition-speed) ease;
     }
     input[type="range"]::-moz-range-thumb {
-      width: 1.2rem;
-      height: 1.2rem;
+      width: 1.1rem;
+      height: 1.1rem;
       border-radius: 50%;
       border: none;
-      background-color: var(--color-slider-thumb);
+      background: var(--thumb);
       cursor: pointer;
-      transition: background-color var(--transition-speed) ease;
     }
-    input[type="range"]:disabled::-webkit-slider-thumb,
-    input[type="range"]:disabled::-moz-range-thumb {
-      background-color: var(--color-text-secondary);
-      opacity: 0.5;
-    }
-    input[type="range"]:disabled {
-      background-color: var(--color-border);
-    }
-
-    /* Buttons */
-    .button-group {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.75rem;
-      margin-top: 1rem;
-    }
-    .mode-toggle-group {
-      display: flex;
-      justify-content: center;
-      gap: 0.75rem;
-      border-top: 1px solid var(--color-border);
-      padding-top: 1rem;
-      margin-top: 0.5rem;
-    }
+    select,
     button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      padding: 0.75rem 1rem;
-      font-size: 0.95rem;
-      font-weight: 500;
-      border: none;
-      border-radius: var(--border-radius);
+      font-family: inherit;
+      font-size: 0.93rem;
+      padding: 0.65rem 0.9rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--bord);
+      background: var(--btn-sec);
+      color: var(--txt1);
       cursor: pointer;
-      transition: background-color var(--transition-speed) ease,
-                  color var(--transition-speed) ease,
-                  box-shadow var(--transition-speed) ease,
-                  transform var(--transition-speed) ease;
-      line-height: 1.2;
-      min-height: 3rem;
+      transition: background var(--fast), transform var(--fast), box-shadow var(--fast);
     }
-    button:hover {
+    button:hover,
+    select:hover {
+      background: var(--btn-sec-hov);
       transform: translateY(-1px);
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
     }
     button:active {
-      transform: translateY(0px);
+      transform: translateY(0);
       box-shadow: none;
     }
     button:disabled {
       opacity: 0.6;
       cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
     }
-
-    /* Primary Button Styles */
     #startPauseBtn {
-      background-color: var(--color-accent);
-      color: var(--light-surface);
+      background: var(--accent);
+      color: #fff;
+      border: none;
     }
     #startPauseBtn:hover {
-      background-color: var(--color-accent-darker);
+      background: var(--accent-dk);
     }
     body.dark-mode #startPauseBtn {
-      color: #111; /* better contrast on amber */
+      color: #111;
     }
 
-    /* Secondary Button Styles */
-    .button-secondary {
-      background-color: var(--color-button-secondary-bg);
-      color: var(--color-text-primary);
-      border: 1px solid var(--color-border);
+    .button-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+      margin-top: 1rem;
     }
-    .button-secondary:hover {
-      background-color: var(--color-button-secondary-hover-bg);
-    }
-    button.toggle-button {
-      min-width: 6rem;
+    .mode-toggle-group {
+      display: flex;
+      justify-content: center;
+      gap: 0.8rem;
+      margin-top: 0.5rem;
+      border-top: 1px solid var(--bord);
+      padding-top: 1rem;
     }
 
-    /* Progress Indicator */
-    #progressIndicator {
+    /* ---------- STATS ---------- */
+    #stats {
+      font-size: 0.85rem;
+      color: var(--txt2);
       text-align: center;
-      color: var(--color-text-secondary);
-      font-size: 0.9rem;
-      font-style: italic;
       height: 1.2em;
     }
 
-    /* --- Focus Mode --- */
+    /* ---------- FOCUS MODE ---------- */
     body.focus-mode #app {
-      background-color: transparent;
+      background: none;
       box-shadow: none;
-      max-width: none;
       padding: 0;
-      margin: 0;
-      border-radius: 0;
+      max-width: none;
     }
     body.focus-mode .hide-in-focus {
       display: none !important;
@@ -348,478 +270,321 @@
       border-radius: 0;
       min-height: 100vh;
     }
-    body.focus-mode #displayAreaWrapper::before {
-      opacity: 0.8;
-      top: 20%;
-      bottom: 20%;
-    }
 
     #exitFocusHint {
       position: fixed;
       bottom: 1rem;
       left: 50%;
       transform: translateX(-50%);
-      background: var(--color-surface);
-      color: var(--color-text-secondary);
-      padding: 0.5rem 1rem;
-      border-radius: var(--border-radius);
-      border: 1px solid var(--color-border);
       font-size: 0.8rem;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      background: var(--surface);
+      padding: 0.4rem 0.8rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--bord);
       opacity: 0;
       pointer-events: none;
-      transition: opacity var(--transition-speed) ease;
+      transition: opacity var(--fast);
     }
     body.focus-mode #exitFocusHint {
       opacity: 1;
       pointer-events: auto;
     }
 
-    /* --- Responsive Adjustments --- */
-    @media (max-width: 768px) {
-      #app {
-        padding: 1.5rem;
-        margin: 1.5rem 0;
-        max-width: 95%;
-      }
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 640px) {
       #controls {
         grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
-      }
-    }
-    @media (max-width: 600px) {
-      html {
-        font-size: 15px;
-      }
-      #app {
-        padding: 1rem;
-        margin: 1rem 0;
-        border-radius: 0;
-      }
-      h1 {
-        font-size: calc(1rem * var(--scale-ratio));
       }
       .button-group {
         grid-template-columns: 1fr;
       }
-      #controls {
-        gap: 0.75rem;
-      }
-      .mode-toggle-group {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      button {
-        padding: 0.7rem 0.9rem;
-        min-height: 2.8rem;
-      }
-      /* We still have wrapping, so no extra rules needed here. */
     }
   </style>
 </head>
 <body>
   <div id="app">
-    <header class="app-header hide-in-focus">
-      <h1>Pace Reader</h1>
-      <textarea id="inputText" placeholder="Paste your text here to begin reading..." rows="8"></textarea>
+    <header class="hide-in-focus">
+      <h1>Pace Reader Pro</h1>
+      <textarea
+        id="inputText"
+        placeholder="Paste or type your text here…"
+        rows="8"
+      ></textarea>
     </header>
 
-    <main class="app-main">
+    <main>
       <div id="displayAreaWrapper">
-        <div id="displayArea">Welcome!</div>
+        <div id="displayArea">Welcome 👋</div>
       </div>
-      <div id="progressIndicator" class="hide-in-focus">&nbsp;</div>
+      <div id="stats" class="hide-in-focus">&nbsp;</div>
     </main>
 
-    <footer class="app-footer hide-in-focus">
+    <footer class="hide-in-focus">
       <div id="controls">
         <div class="control-group">
+          <label for="modeSelect"><span>Practice Mode</span></label>
+          <select id="modeSelect">
+            <option value="pace" selected>Paced Reading</option>
+            <option value="ramp">WPM Ramp</option>
+            <option value="sprint">Sprint Bursts</option>
+            <option value="eye">Eye‑Span Highlight</option>
+          </select>
+        </div>
+        <div class="control-group">
           <label for="wpmSlider">
-            <span>Speed (WPM)</span>
-            <span class="value-display"><span id="wpmValue">300</span> WPM</span>
+            <span>Speed (WPM)</span>
+            <span class="value-display"><span id="wpmValue">300</span></span>
           </label>
-          <input type="range" id="wpmSlider" min="10" max="1500" value="300" step="10">
+          <input type="range" id="wpmSlider" min="60" max="1500" step="10" value="300" />
         </div>
         <div class="control-group">
           <label for="chunkSizeSlider">
-            <span>Words per Line</span>
-            <span class="value-display"><span id="chunkSizeValue">3</span> Words</span>
+            <span>Words / Chunk</span>
+            <span class="value-display"><span id="chunkSizeValue">3</span></span>
           </label>
-          <input type="range" id="chunkSizeSlider" min="1" max="12" value="3" step="1">
+          <input type="range" id="chunkSizeSlider" min="1" max="12" step="1" value="3" />
         </div>
-        <!-- Font Size Control -->
         <div class="control-group">
           <label for="fontSizeSlider">
-            <span>Font Size</span>
-            <span class="value-display"><span id="fontSizeValue">2.0</span> rem</span>
+            <span>Font Size</span>
+            <span class="value-display"><span id="fontSizeValue">2.0</span> rem</span>
           </label>
-          <input type="range" id="fontSizeSlider" min="1" max="5" step="0.1" value="2">
+          <input type="range" id="fontSizeSlider" min="1" max="5" step="0.1" value="2" />
         </div>
-        <!-- Updated Font Family Selector with more options -->
         <div class="control-group">
-          <label for="fontFamilySelect">
-            <span>Font Style</span>
-          </label>
+          <label for="fontFamilySelect"><span>Font Family</span></label>
           <select id="fontFamilySelect">
-            <option value="'Helvetica Neue', Helvetica, sans-serif" selected>Helvetica (Default)</option>
-            <option value="Georgia, serif">Georgia (Serif)</option>
-            <option value="'Times New Roman', serif">Times New Roman (Serif)</option>
-            <option value="'Merriweather', serif">Merriweather (Serif)</option>
-            <option value="'Lato', sans-serif">Lato (Sans-Serif)</option>
-            <option value="'Courier New', monospace">Courier New (Monospace)</option>
-            <option value="'Comic Sans MS', cursive">Comic Sans MS (Cursive)</option>
-            <option value="'Open Sans', sans-serif">Open Sans (Sans-Serif)</option>
-            <option value="'Roboto', sans-serif">Roboto (Sans-Serif)</option>
+            <option value="'Helvetica Neue',Helvetica,sans-serif" selected>Helvetica</option>
+            <option value="Georgia,serif">Georgia</option>
+            <option value="'Times New Roman',serif">Times New Roman</option>
+            <option value="'Roboto',sans-serif">Roboto</option>
+            <option value="'Courier New',monospace">Courier New</option>
           </select>
         </div>
       </div>
 
       <div class="button-group">
-        <button id="startPauseBtn" title="Start Reading">
-          <span class="icon">▶️</span> <span class="text">Start</span>
-        </button>
-        <button id="resetBtn" class="button-secondary" title="Reset Reading">
-          <span class="icon">🔄</span> <span class="text">Reset</span>
-        </button>
+        <button id="startPauseBtn" title="Start Reading"><span class="icon">▶️</span></button>
+        <button id="resetBtn">Reset</button>
       </div>
 
       <div class="mode-toggle-group">
-        <button id="darkModeToggle" class="button-secondary toggle-button" title="Toggle Dark/Light Mode">
-          <span class="icon">🌙</span> <span class="text">Dark Mode</span>
-        </button>
-        <button id="focusModeToggle" class="button-secondary toggle-button" title="Toggle Focus Mode">
-          <span class="icon">👁️</span> <span class="text">Focus Mode</span>
-        </button>
+        <button id="darkModeToggle" title="Toggle Dark Mode">🌙</button>
+        <button id="focusModeToggle" title="Toggle Focus Mode">👁️</button>
       </div>
     </footer>
   </div>
-  <div id="exitFocusHint">Press ESC or click outside the text to exit focus mode</div>
+  <div id="exitFocusHint">Press ESC or tap outside to exit focus</div>
 
   <script>
-    // --- DOM References ---
+    // ---------- ELEMENT HOOKS ----------
+    const el = (id) => document.getElementById(id);
+    const inputText = el("inputText");
+    const displayArea = el("displayArea");
+    const wpmSlider = el("wpmSlider");
+    const chunkSizeSlider = el("chunkSizeSlider");
+    const fontSizeSlider = el("fontSizeSlider");
+    const fontFamilySelect = el("fontFamilySelect");
+    const modeSelect = el("modeSelect");
+    const startPauseBtn = el("startPauseBtn");
+    const resetBtn = el("resetBtn");
+    const stats = el("stats");
+    const darkToggle = el("darkModeToggle");
+    const focusToggle = el("focusModeToggle");
     const body = document.body;
-    const inputText = document.getElementById('inputText');
-    const displayAreaWrapper = document.getElementById('displayAreaWrapper');
-    const displayArea = document.getElementById('displayArea');
-    const progressIndicator = document.getElementById('progressIndicator');
-    const startPauseBtn = document.getElementById('startPauseBtn');
-    const resetBtn = document.getElementById('resetBtn');
-    const wpmSlider = document.getElementById('wpmSlider');
-    const wpmValue = document.getElementById('wpmValue');
-    const chunkSizeSlider = document.getElementById('chunkSizeSlider');
-    const chunkSizeValue = document.getElementById('chunkSizeValue');
-    const darkModeToggle = document.getElementById('darkModeToggle');
-    const focusModeToggle = document.getElementById('focusModeToggle');
 
-    // New controls
-    const fontSizeSlider = document.getElementById('fontSizeSlider');
-    const fontSizeValue = document.getElementById('fontSizeValue');
-    const fontFamilySelect = document.getElementById('fontFamilySelect');
-
-    // State
-    const state = {
+    // ---------- STATE ----------
+    const S = {
       words: [],
       chunks: [],
-      currentChunkIndex: 0,
+      idx: 0,
       wpm: 300,
       chunkSize: 3,
-      isRunning: false,
-      isDarkMode: false,
-      isFocusMode: false,
-      timeoutId: null,
-      settingsChanged: false,
-      displayFontSize: 2.0,
-      displayFontFamily: fontFamilySelect.value
+      mode: "pace",
+      timer: null,
+      running: false,
+      startTime: 0,
+      totalRead: 0,
+      fontSize: 2,
+      fontFamily: fontFamilySelect.value,
+      dark: false,
+      focus: false,
     };
 
-    // Initialize
-    function initializeApp() {
-      // Start with slider values
-      state.wpm = parseInt(wpmSlider.value, 10);
-      state.chunkSize = parseInt(chunkSizeSlider.value, 10);
-      wpmValue.textContent = state.wpm;
-      chunkSizeValue.textContent = state.chunkSize;
-      // Font size & family
-      state.displayFontSize = parseFloat(fontSizeSlider.value);
-      state.displayFontFamily = fontFamilySelect.value;
-      fontSizeValue.textContent = state.displayFontSize.toFixed(1);
+    // ---------- INIT ----------
+    function init() {
+      // restore dark‑pref
+      S.dark = localStorage.getItem("paceDark") === "true";
+      body.classList.toggle("dark-mode", S.dark);
+      updateDarkIcon();
 
-      // Apply initial style
-      updateDisplayAreaStyle();
+      // listeners
+      wpmSlider.oninput = () => {
+        S.wpm = +wpmSlider.value;
+        el("wpmValue").textContent = S.wpm;
+      };
+      chunkSizeSlider.oninput = () => {
+        S.chunkSize = +chunkSizeSlider.value;
+        el("chunkSizeValue").textContent = S.chunkSize;
+        rebuildChunks();
+      };
+      fontSizeSlider.oninput = () => {
+        S.fontSize = +fontSizeSlider.value;
+        el("fontSizeValue").textContent = S.fontSize.toFixed(1);
+        displayArea.style.fontSize = S.fontSize + "rem";
+      };
+      fontFamilySelect.onchange = () => {
+        S.fontFamily = fontFamilySelect.value;
+        displayArea.style.fontFamily = S.fontFamily;
+      };
+      modeSelect.onchange = () => {
+        S.mode = modeSelect.value;
+      };
 
-      // Check localStorage for dark mode
-      const preferredMode = localStorage.getItem('darkModePreference');
-      state.isDarkMode = (preferredMode === 'true');
-      if (state.isDarkMode) {
-        body.classList.add('dark-mode');
-      }
-      updateDarkModeButton();
-      updateFocusModeButton();
+      inputText.oninput = resetAll;
+      startPauseBtn.onclick = toggleRun;
+      resetBtn.onclick = resetAll;
+      darkToggle.onclick = () => {
+        S.dark = !S.dark;
+        body.classList.toggle("dark-mode", S.dark);
+        localStorage.setItem("paceDark", S.dark);
+        updateDarkIcon();
+      };
+      focusToggle.onclick = toggleFocus;
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && S.focus) toggleFocus();
+      });
 
-      // Event Listeners
-      wpmSlider.addEventListener('input', handleWpmChange);
-      chunkSizeSlider.addEventListener('input', handleChunkSizeChange);
-      startPauseBtn.addEventListener('click', toggleReading);
-      resetBtn.addEventListener('click', resetReading);
-      inputText.addEventListener('input', handleTextInput);
-      darkModeToggle.addEventListener('click', toggleDarkMode);
-      focusModeToggle.addEventListener('click', toggleFocusMode);
-      document.addEventListener('keydown', handleGlobalKeydown);
-      displayAreaWrapper.addEventListener('click', handleFocusWrapperClick);
-
-      // New style listeners
-      fontSizeSlider.addEventListener('input', handleFontSizeChange);
-      fontFamilySelect.addEventListener('change', handleFontFamilyChange);
-
-      progressIndicator.textContent = '\u00A0';
-    }
-
-    // --- Handlers ---
-    function handleWpmChange() {
-      state.wpm = parseInt(wpmSlider.value, 10);
-      wpmValue.textContent = state.wpm;
-      state.settingsChanged = true;
-    }
-    function handleChunkSizeChange() {
-      state.chunkSize = parseInt(chunkSizeSlider.value, 10);
-      chunkSizeValue.textContent = state.chunkSize;
-      state.settingsChanged = true;
-      // If not running, re-process immediately
-      if (!state.isRunning && state.words.length > 0) {
-        processText(false);
-        displayCurrentChunk();
-      }
-    }
-    function handleTextInput() {
-      if (state.isRunning) {
-        pauseReading();
-      }
-      state.words = [];
-      state.chunks = [];
-      state.currentChunkIndex = 0;
-      state.settingsChanged = true;
-      progressIndicator.textContent = '\u00A0';
-      displayArea.textContent = '... Text changed ...';
-    }
-    function handleGlobalKeydown(event) {
-      if (event.key === 'Escape' && state.isFocusMode) {
-        exitFocusMode();
-      }
-    }
-    function handleFocusWrapperClick(e) {
-      if (state.isFocusMode && e.target === displayAreaWrapper) {
-        exitFocusMode();
-      }
+      // init UI values
+      el("wpmValue").textContent = S.wpm;
+      el("chunkSizeValue").textContent = S.chunkSize;
+      el("fontSizeValue").textContent = S.fontSize.toFixed(1);
+      displayArea.style.fontSize = S.fontSize + "rem";
+      displayArea.style.fontFamily = S.fontFamily;
     }
 
-    // Font changes
-    function handleFontSizeChange(e) {
-      state.displayFontSize = parseFloat(e.target.value);
-      fontSizeValue.textContent = state.displayFontSize.toFixed(1);
-      updateDisplayAreaStyle();
-    }
-    function handleFontFamilyChange(e) {
-      state.displayFontFamily = e.target.value;
-      updateDisplayAreaStyle();
-    }
-    function updateDisplayAreaStyle() {
-      displayArea.style.fontSize = state.displayFontSize + 'rem';
-      displayArea.style.fontFamily = state.displayFontFamily;
+    // ---------- CORE LOGIC ----------
+    function rebuildChunks() {
+      const txt = inputText.value.trim();
+      S.words = txt.split(/\s+/).filter((w) => w);
+      S.chunks = [];
+      for (let i = 0; i < S.words.length; i += S.chunkSize) {
+        S.chunks.push(S.words.slice(i, i + S.chunkSize).join(" "));
+      }
+      S.idx = 0;
+      S.totalRead = 0;
+      updateStats();
     }
 
-    // --- Core Reading Logic ---
-    function processText(andStart = false) {
-      const text = inputText.value.trim();
-      state.words = text.split(/\s+/).filter(word => word.length > 0);
-      if (!state.words.length) {
-        state.chunks = [];
-        state.currentChunkIndex = 0;
-        return false;
+    function formatChunk(chunk) {
+      if (S.mode === "eye") {
+        const arr = chunk.split(" ");
+        const mid = Math.floor(arr.length / 2);
+        arr[mid] = `<span class="highlight">${arr[mid]}</span>`;
+        return arr.join(" ");
       }
-      // Build chunked lines
-      state.chunks = [];
-      for (let i = 0; i < state.words.length; i += state.chunkSize) {
-        const chunk = state.words.slice(i, i + state.chunkSize).join(' ');
-        state.chunks.push(chunk);
-      }
-      state.currentChunkIndex = 0;
-      state.settingsChanged = false;
-      if (andStart) {
-        startReadingSequence();
-      }
-      return true;
+      return chunk;
     }
-    function displayNextChunk() {
-      if (state.currentChunkIndex >= state.chunks.length) {
-        stopReading(true); // finished
+
+    function nextChunk() {
+      if (S.idx >= S.chunks.length) return stop(true);
+
+      const chunk = S.chunks[S.idx];
+      displayArea.innerHTML = formatChunk(chunk);
+      const words = chunk.split(/\s+/).length;
+      S.totalRead += words;
+      S.idx++;
+      updateStats();
+
+      // mode‑specific behaviour
+      rampIfNeeded();
+      sprintIfNeeded();
+
+      const delay = Math.max((words / S.wpm) * 60000, 40);
+      S.timer = setTimeout(nextChunk, delay);
+    }
+
+    /* WPM Ramp – adds 10 WPM every 10 chunks */
+    function rampIfNeeded() {
+      if (S.mode !== "ramp") return;
+      if (S.idx % 10 === 0) {
+        S.wpm += 10;
+        wpmSlider.value = S.wpm;
+        el("wpmValue").textContent = S.wpm;
+      }
+    }
+
+    /* Sprint – alternate high/low speed every 5 chunks */
+    function sprintIfNeeded() {
+      if (S.mode !== "sprint") return;
+      if (S.idx % 5 === 0) {
+        const high = +wpmSlider.value * 1.6;
+        const low = +wpmSlider.value;
+        S.wpm = S.wpm === high ? low : high;
+      }
+    }
+
+    function start() {
+      if (!S.chunks.length) rebuildChunks();
+      if (!S.chunks.length) {
+        displayArea.textContent = "…Enter text…";
         return;
       }
-      displayArea.textContent = state.chunks[state.currentChunkIndex];
-      updateProgressIndicator();
-
-      const wordsInChunk = state.chunks[state.currentChunkIndex].split(/\s+/).length;
-      const wpm = Math.max(1, state.wpm);
-      let delay = (wordsInChunk / wpm) * 60000; // ms
-      delay = Math.max(delay, 40); // minimum
-
-      state.currentChunkIndex++;
-      state.timeoutId = setTimeout(displayNextChunk, delay);
-    }
-    function startReadingSequence() {
-      if (!state.chunks.length) {
-        displayArea.textContent = '... No text to read ...';
-        updateStartPauseButton(false);
-        disableControls(false);
-        return;
-      }
-      clearTimeout(state.timeoutId);
-      state.isRunning = true;
-      updateStartPauseButton(true);
-      disableControls(true);
-      displayNextChunk();
-    }
-    function pauseReading() {
-      if (!state.isRunning) return;
-      clearTimeout(state.timeoutId);
-      state.timeoutId = null;
-      state.isRunning = false;
-      updateStartPauseButton(false);
-      disableControls(false);
-    }
-    function stopReading(completed = false) {
-      clearTimeout(state.timeoutId);
-      state.timeoutId = null;
-      state.isRunning = false;
-      updateStartPauseButton(false);
-      disableControls(false);
-
-      if (completed) {
-        displayArea.textContent = '--- Finished ---';
-        updateProgressIndicator(true);
-      } else {
-        if (state.currentChunkIndex > 0) {
-          displayArea.textContent = state.chunks[state.currentChunkIndex - 1] || '...';
-        }
-      }
-    }
-    function toggleReading() {
-      if (state.isRunning) {
-        pauseReading();
-      } else {
-        if (!state.chunks.length || state.settingsChanged) {
-          const ok = processText(true);
-          if (!ok) {
-            displayArea.textContent = inputText.value.trim()
-              ? '... No words found ...'
-              : '... Enter some text ...';
-          }
-        } else {
-          startReadingSequence();
-        }
-      }
-    }
-    function resetReading() {
-      stopReading();
-      state.currentChunkIndex = 0;
-      displayArea.textContent = '... Ready ...';
-      updateProgressIndicator(false);
+      S.running = true;
+      startPauseBtn.innerHTML = "⏸️";
+      S.startTime = Date.now();
+      nextChunk();
     }
 
-    // --- UI Helpers ---
-    function displayCurrentChunk() {
-      if (state.chunks.length > 0 && state.currentChunkIndex < state.chunks.length) {
-        displayArea.textContent = state.chunks[state.currentChunkIndex];
-      } else {
-        displayArea.textContent = '... Ready ...';
-      }
-      updateProgressIndicator();
+    function pause() {
+      clearTimeout(S.timer);
+      S.running = false;
+      startPauseBtn.innerHTML = "▶️";
     }
-    function updateProgressIndicator(finished = false) {
-      const totalChunks = state.chunks.length;
-      const idx = state.currentChunkIndex;
+
+    function stop(finished) {
+      clearTimeout(S.timer);
+      S.running = false;
+      startPauseBtn.innerHTML = "▶️";
       if (finished) {
-        progressIndicator.textContent = `Finished (${totalChunks}/${totalChunks})`;
-      } else if (totalChunks > 0 && idx < totalChunks) {
-        progressIndicator.textContent = `Chunk ${idx + 1} / ${totalChunks}`;
-      } else {
-        progressIndicator.textContent = '\u00A0';
-      }
-    }
-    function updateStartPauseButton(isRunning) {
-      const icon = startPauseBtn.querySelector('.icon');
-      const text = startPauseBtn.querySelector('.text');
-      if (isRunning) {
-        icon.textContent = '⏸️';
-        text.textContent = 'Pause';
-        startPauseBtn.title = 'Pause Reading';
-      } else {
-        icon.textContent = '▶️';
-        const partial = (state.currentChunkIndex > 0 && state.currentChunkIndex < state.chunks.length);
-        text.textContent = partial ? 'Resume' : 'Start';
-        startPauseBtn.title = text.textContent + ' Reading';
-      }
-    }
-    function disableControls(disabled) {
-      wpmSlider.disabled = disabled;
-      chunkSizeSlider.disabled = disabled;
-      fontSizeSlider.disabled = disabled;
-      fontFamilySelect.disabled = disabled;
-      // Optionally disable input:
-      // inputText.disabled = disabled;
-    }
-
-    // --- Dark Mode ---
-    function toggleDarkMode() {
-      state.isDarkMode = !state.isDarkMode;
-      body.classList.toggle('dark-mode', state.isDarkMode);
-      localStorage.setItem('darkModePreference', state.isDarkMode);
-      updateDarkModeButton();
-    }
-    function updateDarkModeButton() {
-      const icon = darkModeToggle.querySelector('.icon');
-      const text = darkModeToggle.querySelector('.text');
-      if (state.isDarkMode) {
-        icon.textContent = '☀️';
-        text.textContent = 'Light Mode';
-        darkModeToggle.title = 'Switch to Light Mode';
-      } else {
-        icon.textContent = '🌙';
-        text.textContent = 'Dark Mode';
-        darkModeToggle.title = 'Switch to Dark Mode';
+        displayArea.textContent = "— Finished —";
       }
     }
 
-    // --- Focus Mode ---
-    function toggleFocusMode() {
-      state.isFocusMode ? exitFocusMode() : enterFocusMode();
-    }
-    function enterFocusMode() {
-      if (state.isFocusMode) return;
-      state.isFocusMode = true;
-      body.classList.add('focus-mode');
-      updateFocusModeButton();
-    }
-    function exitFocusMode() {
-      if (!state.isFocusMode) return;
-      state.isFocusMode = false;
-      body.classList.remove('focus-mode');
-      updateFocusModeButton();
-    }
-    function updateFocusModeButton() {
-      const icon = focusModeToggle.querySelector('.icon');
-      const text = focusModeToggle.querySelector('.text');
-      if (state.isFocusMode) {
-        icon.textContent = '👁️‍🗨️';
-        text.textContent = 'Exit Focus';
-        focusModeToggle.title = 'Exit Focus Mode';
-      } else {
-        icon.textContent = '👁️';
-        text.textContent = 'Focus Mode';
-        focusModeToggle.title = 'Enter Focus Mode';
-      }
+    function toggleRun() {
+      S.running ? pause() : start();
     }
 
-    // --- Start ---
-    initializeApp();
+    function resetAll() {
+      pause();
+      S.idx = 0;
+      S.totalRead = 0;
+      displayArea.innerHTML = "…Ready…";
+      rebuildChunks();
+    }
+
+    // ---------- UTIL ----------
+    function updateStats() {
+      if (!S.chunks.length) {
+        stats.innerHTML = "&nbsp;";
+        return;
+      }
+      const timeSec = ((Date.now() - S.startTime) / 1000) || 0;
+      const wpmNow = timeSec ? Math.round((S.totalRead / timeSec) * 60) : S.wpm;
+      stats.textContent = `Chunk ${S.idx}/${S.chunks.length} · ${S.totalRead} w · ${wpmNow} wpm`;
+    }
+
+    function updateDarkIcon() {
+      darkToggle.textContent = S.dark ? "☀️" : "🌙";
+    }
+
+    function toggleFocus() {
+      S.focus = !S.focus;
+      body.classList.toggle("focus-mode", S.focus);
+      focusToggle.textContent = S.focus ? "👁️‍🗨️" : "👁️";
+    }
+
+    init();
   </script>
 </body>
 </html>
